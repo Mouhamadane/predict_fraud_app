@@ -3,7 +3,7 @@ from sklearn.preprocessing import LabelEncoder
 
 
 def make_mystep(df):
-    df['step'] = 1577836800 + df['step'] * 3600 * 24
+    df['step'] = 1577836800 + 3 * 3600 * 24
     df['step'] = pd.to_datetime(df['step'], unit='s')
     return df
 
@@ -64,3 +64,12 @@ def predict(config, model):
     data = pipeline_transform(df)
     y_pred = model.predict(data)
     return y_pred
+
+
+def proba(config, model):
+    if type(config) == dict:
+        df = pd.DataFrame(config, index=[0])
+    else:
+        df = config
+    proba = model.predict_proba(df)
+    return proba
